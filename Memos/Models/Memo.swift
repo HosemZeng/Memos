@@ -14,7 +14,7 @@ struct Memo: Hashable,Codable,Identifiable {
     var title: String
     var text: String
     var isFavorite: Bool
-    fileprivate var imageName: String
+    var imageName: String
     static let `default` = Self(id:0, title:"无标题", text:"....", isFavorite: false, imageName:"one")
 }
 

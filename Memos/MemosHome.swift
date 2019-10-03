@@ -9,10 +9,24 @@
 import SwiftUI
 
 struct MemosHome: View {
+    
+    @State  var showingNewEditMode = false
+    
+    var addButton: some View {
+        Button(action: { self.showingNewEditMode.toggle() }) {
+            Image(systemName: "plus.square")
+                .imageScale(.large)
+                .accessibility(label: Text("Create new memo"))
+                .padding()
+        }
+    }
+    
     var body: some View {
         NavigationView{
-            MemosList(items: Array(MemoData))
+            MemosList(items: Array(MemoData) )
                 .navigationBarTitle(Text("备忘录"))
+                .navigationBarItems(trailing: addButton)
+                .padding(.top, 20)
         }
     }
 }

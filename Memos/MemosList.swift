@@ -27,7 +27,7 @@ struct MemosList: View {
                     }
                 }
             }
-            .frame(width: 170)
+            .frame(width: 160)
             
         }
     }
