@@ -1,1 +1,1 @@
-It's a tested program in SwiftUI.
+It's a studying program in SwiftUI.
