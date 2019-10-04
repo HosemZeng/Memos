@@ -8,11 +8,60 @@
 
 import SwiftUI
 
+let screenRect = UIScreen.main.bounds
+let textHeight = screenRect.size.height - 190
+
+struct TextView: UIViewRepresentable {
+@Binding var text: String
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    func makeUIView(context: Context) -> UITextView {
+
+        let textView = UITextView()
+        textView.delegate = context.coordinator
+        textView.layer.borderWidth = 0
+        textView.font = UIFont(name: "HelveticaNeue", size: 18)
+        textView.keyboardType = UIKeyboardType.default
+        textView.isScrollEnabled = true
+        textView.contentInset = UIEdgeInsets(top: -11, left: -6, bottom: 0, right: 0);
+        textView.isEditable = false
+        textView.isUserInteractionEnabled = true
+        return textView
+    }
+
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        uiView.text = text
+    }
+
+    class Coordinator : NSObject, UITextViewDelegate {
+
+        var parent: TextView
+
+        init(_ uiTextView: TextView) {
+            self.parent = uiTextView
+        }
+
+        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+            return true
+        }
+        
+        func textViewDidChange(_ textView: UITextView) {
+            print("text now: \(String(describing: textView.text!))")
+            self.parent.text = textView.text
+        }
+    }
+}
+
 struct MemoPage: View {
     @State var memo: Memo
 
     @Environment(\.editMode) var mode
     @State var draftMemo = Memo.default
+    
+
     
     var body: some View {
         VStack(alignment: .leading){
@@ -31,15 +80,16 @@ struct MemoPage: View {
                     .padding(.bottom, 20)
             }
                 .frame(height:20)
+            
             if self.mode?.wrappedValue == .inactive {
                 Text(memo.title)
                     .font(.title)
                     .padding(.leading, 15)
                     .padding(.top, -20)
                 Divider()
-                Text(memo.text)
+                TextView(text:$memo.text)
                     .padding(.leading, 15)
-                    .lineLimit(22)
+                    .frame(height: textHeight)
                 Spacer()
             } else {
                 MemoPageEditor(memo: $draftMemo)

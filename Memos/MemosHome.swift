@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+
 struct MemosHome: View {
     
     @State  var showingNewEditMode = false

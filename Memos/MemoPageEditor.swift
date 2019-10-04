@@ -9,7 +9,7 @@
 
 import SwiftUI
 
-struct TextView: UIViewRepresentable {
+struct TextViewInEditor: UIViewRepresentable {
     @Binding var text: String
 
         func makeCoordinator() -> Coordinator {
@@ -18,14 +18,16 @@ struct TextView: UIViewRepresentable {
 
         func makeUIView(context: Context) -> UITextView {
 
-            let myTextView = UITextView()
-            myTextView.delegate = context.coordinator
-
-            myTextView.font = UIFont(name: "HelveticaNeue", size: 15)
-            myTextView.isScrollEnabled = true
-            myTextView.isEditable = true
-            myTextView.isUserInteractionEnabled = true
-            return myTextView
+            let textView = UITextView()
+            textView.delegate = context.coordinator
+            textView.layer.borderWidth = 0
+            textView.font = UIFont(name: "HelveticaNeue", size: 18)
+            textView.keyboardType = UIKeyboardType.default
+            textView.isScrollEnabled = true
+            textView.contentInset = UIEdgeInsets(top: -11, left: -6, bottom: 0, right: 0);
+            textView.isEditable = true
+            textView.isUserInteractionEnabled = true
+            return textView
         }
 
         func updateUIView(_ uiView: UITextView, context: Context) {
@@ -34,16 +36,16 @@ struct TextView: UIViewRepresentable {
 
         class Coordinator : NSObject, UITextViewDelegate {
 
-            var parent: TextView
+            var parent: TextViewInEditor
 
-            init(_ uiTextView: TextView) {
+            init(_ uiTextView: TextViewInEditor) {
                 self.parent = uiTextView
             }
 
             func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
                 return true
             }
-
+            
             func textViewDidChange(_ textView: UITextView) {
                 print("text now: \(String(describing: textView.text!))")
                 self.parent.text = textView.text
@@ -54,16 +56,23 @@ struct TextView: UIViewRepresentable {
 struct MemoPageEditor: View {
     @Binding var memo : Memo
 
+    
     var body: some View {
-        VStack{
+
+        VStack(alignment: .leading){
             TextField("Title", text:$memo.title)
                 .font(.title)
                 .padding(.leading, 15)
                 .padding(.top, -20)
             Divider()
-            TextView(text:$memo.text)
+            ScrollView{                                              //这个办法太绝了
+            TextViewInEditor(text:$memo.text)
+                .padding(.leading, 15)
+                .frame(height: textHeight)
+            }
             Spacer()
         }
+
     }
 }
 
