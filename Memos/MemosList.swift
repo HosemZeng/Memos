@@ -18,7 +18,8 @@ struct MemosList: View {
                     ForEach(self.items) { memo in
                         NavigationLink(
                             destination:MemoPage(
-                                memo: memo
+                                memo: memo,
+                                draftMemo: memo
                             )
                         ){
                             HStack{

@@ -9,7 +9,7 @@
 import SwiftUI
 
 let screenRect = UIScreen.main.bounds
-let textHeight = screenRect.size.height - 190
+let textHeight = screenRect.size.height*0.905 - 190
 
 struct TextView: UIViewRepresentable {
 @Binding var text: String
@@ -56,11 +56,10 @@ struct TextView: UIViewRepresentable {
 }
 
 struct MemoPage: View {
-    @State var memo: Memo
-
-    @Environment(\.editMode) var mode
-    @State var draftMemo = Memo.default
     
+    @State var memo: Memo
+    @State var draftMemo : Memo
+    @Environment(\.editMode) var mode
 
     
     var body: some View {
@@ -80,12 +79,10 @@ struct MemoPage: View {
                     .padding(.bottom, 20)
             }
                 .frame(height:20)
-            
             if self.mode?.wrappedValue == .inactive {
                 Text(memo.title)
                     .font(.title)
                     .padding(.leading, 15)
-                    .padding(.top, -20)
                 Divider()
                 TextView(text:$memo.text)
                     .padding(.leading, 15)
@@ -98,17 +95,16 @@ struct MemoPage: View {
                     }
                     .onDisappear {
                         self.memo = self.draftMemo
+                        MemoData[self.memo.id] = self.memo
                     }
             }
         }
-
         .padding(.top, 0)
-        .padding(.bottom, -80)
 }
 }
 
 struct MemoPage_Previews: PreviewProvider {
     static var previews: some View {
-        MemoPage(memo: Memo.default)
+        MemoPage(memo: Memo.default, draftMemo: Memo.default)
     }
 }

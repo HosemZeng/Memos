@@ -24,10 +24,11 @@ struct MemosHome: View {
     
     var body: some View {
         NavigationView{
-            MemosList(items: Array(MemoData) )
+            MemosList(items: MemoData )
                 .navigationBarTitle(Text("备忘录"))
                 .navigationBarItems(trailing: addButton)
                 .padding(.top, 20)
+            
         }
     }
 }

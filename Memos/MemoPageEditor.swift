@@ -55,22 +55,27 @@ struct TextViewInEditor: UIViewRepresentable {
 
 struct MemoPageEditor: View {
     @Binding var memo : Memo
-
+    
+/* func initDraft(to memoInMemoPage : Memo) -> some View{      //第一次调用时初始化MemoPage
+        if memo != memoInMemoPage {
+            memo = memoInMemoPage
+        }
+        return self
+    }
+*/
     
     var body: some View {
-
         VStack(alignment: .leading){
+            ScrollView{         //这个办法太绝了
             TextField("Title", text:$memo.title)
                 .font(.title)
                 .padding(.leading, 15)
-                .padding(.top, -20)
             Divider()
-            ScrollView{                                              //这个办法太绝了
             TextViewInEditor(text:$memo.text)
                 .padding(.leading, 15)
                 .frame(height: textHeight)
             }
-            Spacer()
+            Spacer()            //给keyBoard留出空间
         }
 
     }
@@ -78,7 +83,7 @@ struct MemoPageEditor: View {
 
 struct MemoPageEditor_Previews: PreviewProvider {
     static var previews: some View {
-        MemoPage(memo: Memo.default)
+        MemoPage(memo: Memo.default, draftMemo: Memo.default)
     }
 }
 

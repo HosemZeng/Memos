@@ -10,7 +10,7 @@ import CoreLocation
 import UIKit
 import SwiftUI
 
-let MemoData: [Memo] = load("MemoData.json")
+var MemoData: [Memo] = load("MemoData.json")
 
 func load<T: Decodable>(_ filename: String, as type: T.Type = T.self) -> T {
     let data: Data
@@ -33,6 +33,31 @@ func load<T: Decodable>(_ filename: String, as type: T.Type = T.self) -> T {
         fatalError("Couldn't parse \(filename) as \(T.self):\n\(error)")
     }
 }
+
+
+/*func update(_ memoArray : [Memo]) {
+    do {
+        let fileURL = try FileManager.default
+            .url(for: .Memos.Resources , in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("MemoData.json")
+
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
+        let data = try encoder.encode(memoArray)
+        try data.write(to: fileURL)
+        
+    } catch {
+        print(error)
+    }
+}*/
+
+func update(_ memoArray : [Memo]){
+    let filePath : String = NSHomeDirectory() + "/Documents/data.plist"
+    NSArray(array: memoArray).write(toFile: filePath, atomically: true )
+    print(filePath)
+}
+
 
 final class ImageStore {
     typealias _ImageDictionary = [String: CGImage]
