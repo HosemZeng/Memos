@@ -9,13 +9,13 @@
 import SwiftUI
 
 struct MemosList: View {
-    var items: [Memo]
+    @ObservedObject var items: Memos    //监听items（即memoData），必须
     
     var body: some View {
         VStack(alignment: .leading){
             ScrollView(.vertical, showsIndicators: false){ //建立滚动视窗
                 VStack(alignment: .leading, spacing: 0){
-                    ForEach(self.items) { memo in
+                    ForEach(self.items.memos) { memo in
                         NavigationLink(
                             destination:MemoPage(
                                 memo: memo,
@@ -36,7 +36,7 @@ struct MemosList: View {
 }
 
 struct MemoItem:View {
-    var memo: Memo
+    var memo: MemoStruct
     var body: some View {
         VStack(alignment: .leading){
             memo.image
@@ -50,9 +50,4 @@ struct MemoItem:View {
     }
 }
 
-struct MemosList_Previews: PreviewProvider {
-    static var previews: some View {
-        MemosList(
-            items: Array(MemoData.prefix(4)))
-    }
-}
+

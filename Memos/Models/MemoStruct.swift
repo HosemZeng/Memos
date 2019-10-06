@@ -9,7 +9,7 @@
 import SwiftUI
 import CoreLocation
 
-struct Memo: Hashable,Codable,Identifiable {
+struct MemoStruct: Hashable,Codable,Identifiable {
     var id: Int
     var title: String
     var text: String
@@ -18,8 +18,17 @@ struct Memo: Hashable,Codable,Identifiable {
     static let `default` = Self(id:0, title:"无标题", text:"....", isFavorite: false, imageName:"one")
 }
 
-extension Memo {
+
+extension MemoStruct {
     var image: Image {
         ImageStore.shared.image(name:"one")
     }
+}
+
+extension Array {
+func appendReturnLastElement(newElement: Element) -> Element {
+    var result = self
+    result.append(newElement)
+    return result[result.count-1]
+}
 }

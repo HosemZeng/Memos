@@ -56,11 +56,15 @@ struct TextView: UIViewRepresentable {
 }
 
 struct MemoPage: View {
-    
-    @State var memo: Memo
-    @State var draftMemo : Memo
+    @State var memo: MemoStruct
+    @State var draftMemo : MemoStruct         //必须初始化一次draftMemo
     @Environment(\.editMode) var mode
 
+    
+ /*   var deleteButton : some View {
+        Button
+    }
+ */
     
     var body: some View {
         VStack(alignment: .leading){
@@ -95,16 +99,19 @@ struct MemoPage: View {
                     }
                     .onDisappear {
                         self.memo = self.draftMemo
-                        MemoData[self.memo.id] = self.memo
+                        memoData.memos[self.memo.id] = self.memo
+                        print(memoData.memos)
+                        update(memoData.memos)
                     }
             }
         }
         .padding(.top, 0)
+       // .navigationBarItems(trailing: deleteButton)
 }
 }
 
 struct MemoPage_Previews: PreviewProvider {
     static var previews: some View {
-        MemoPage(memo: Memo.default, draftMemo: Memo.default)
+        MemoPage(memo: MemoStruct.default, draftMemo: MemoStruct.default)
     }
 }
