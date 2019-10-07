@@ -23,6 +23,7 @@ extension MemoStruct {
     var image: Image {
         ImageStore.shared.image(name:"one")
     }
+
 }
 
 extension Array {

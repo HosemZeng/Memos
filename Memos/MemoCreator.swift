@@ -10,7 +10,7 @@ import SwiftUI
 
 let newTextEditorHeight = textHeight
 
-struct NewTextViewInEditor: UIViewRepresentable {
+struct TextViewInCreator: UIViewRepresentable {
     @Binding var text: String
 
     func makeCoordinator() -> Coordinator {
@@ -37,9 +37,9 @@ struct NewTextViewInEditor: UIViewRepresentable {
 
     class Coordinator : NSObject, UITextViewDelegate {
 
-        var parent: NewTextViewInEditor
+        var parent: TextViewInCreator
 
-        init(_ uiTextView: NewTextViewInEditor) {
+        init(_ uiTextView: TextViewInCreator) {
             self.parent = uiTextView
         }
 
@@ -54,7 +54,7 @@ struct NewTextViewInEditor: UIViewRepresentable {
     }
 }
 
-struct NewMemoPageEditor: View {
+struct MemoCreator: View {
     
    @Binding var memo: MemoStruct      
 /* func initDraft(to memoInMemoPage : Memo) -> some View{      //第一次调用时初始化MemoPage
@@ -73,7 +73,7 @@ struct NewMemoPageEditor: View {
                 .font(.title)
                 .padding(.leading, 15)
                 Divider()
-                NewTextViewInEditor(text: $memo.text)
+                TextViewInCreator(text: $memo.text)
                     .padding(.leading, 15)
                     .frame(height: newTextEditorHeight*0.4)
                 Spacer()        //给keyBoard留出空间
@@ -83,7 +83,7 @@ struct NewMemoPageEditor: View {
     }
 }
 
-struct NewMemoPageEditor_Previews: PreviewProvider {
+struct MemoCreator_Previews: PreviewProvider {
     static var previews: some View {
         MemoPage(memo: MemoStruct.default, draftMemo: MemoStruct.default)
     }

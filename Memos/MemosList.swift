@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct MemosList: View {
-    @ObservedObject var items: Memos    //监听items（即memoData），必须
+    @ObservedObject var items: Memos    //监听items（即memoData），必须  //引用传递
     
     var body: some View {
         VStack(alignment: .leading){

@@ -57,7 +57,7 @@ struct TextView: UIViewRepresentable {
 
 struct MemoPage: View {
     @State var memo: MemoStruct
-    @State var draftMemo : MemoStruct         //必须初始化一次draftMemo
+    @State var draftMemo : MemoStruct
     @Environment(\.editMode) var mode
 
     
@@ -98,15 +98,16 @@ struct MemoPage: View {
                         self.draftMemo = self.memo
                     }
                     .onDisappear {
+                        let index = memoData.memos.firstIndex(of: self.memo)   //找出下标
                         self.memo = self.draftMemo
-                        memoData.memos[self.memo.id] = self.memo
-                        print(memoData.memos)
-                        update(memoData.memos)
+                        //print(self.memo.id)
+                        memoData.memos[index!] = self.memo  //根据下标修改memoData
+                        //print(memoData.memos)
+                        update(memoData.memos)      //保存
                     }
             }
         }
         .padding(.top, 0)
-       // .navigationBarItems(trailing: deleteButton)
 }
 }
 

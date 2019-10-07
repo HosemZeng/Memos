@@ -56,15 +56,6 @@ struct TextViewInEditor: UIViewRepresentable {
 struct MemoPageEditor: View {
     @Binding var memo : MemoStruct
     
-    
-/* func initDraft(to memoInMemoPage : Memo) -> some View{      //第一次调用时初始化MemoPage
-        if memo != memoInMemoPage {
-            memo = memoInMemoPage
-        }
-        return self
-    }
-*/
-    
     var body: some View {
         VStack(alignment: .leading){
             ScrollView{                 //这个办法太绝了
